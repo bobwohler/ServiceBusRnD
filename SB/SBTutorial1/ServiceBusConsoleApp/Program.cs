@@ -59,7 +59,7 @@ namespace ServiceBusConsoleApp
             QueueClient queueClient = messageFactory.CreateQueueClient(QueueName);
 
             // Create a simple brokered message and send it to the queue.
-            BrokeredMessage messageToSend = new BrokeredMessage("Hello World! I used to GitHub with this solution!");
+            BrokeredMessage messageToSend = new BrokeredMessage("Hello World! I used GitHub with this solution!");
             queueClient.Send(messageToSend);
 
             // Receive the message back from the queue.
