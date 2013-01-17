@@ -24,20 +24,23 @@ namespace ServiceBusConsoleApp
             ServiceBusConnectionStringBuilder connBuilder = new ServiceBusConnectionStringBuilder();
             connBuilder.ManagementPort = HttpPort;
             connBuilder.RuntimePort = TcpPort;
-            connBuilder.Endpoints.Add(new UriBuilder()
+            UriBuilder runtimeAddress = new UriBuilder()
             {
                 Scheme = "sb", // this scheme is for TCP
                 Host = ServerFQDN,
                 Path = ServiceNamespace
-            }.Uri);
-            connBuilder.StsEndpoints.Add(new UriBuilder()
+            };
+            connBuilder.Endpoints.Add(runtimeAddress.Uri);
+
+            UriBuilder mgmtAddress = new UriBuilder()
             {
                 Scheme = "https",
                 Host = ServerFQDN,
                 Port = HttpPort,
                 Path = ServiceNamespace
-            }.Uri);
-
+            };
+            connBuilder.StsEndpoints.Add(mgmtAddress.Uri);
+            
             //TODO: Identify specifics of purpose of 
             // NamespaceManager instance...
             NamespaceManager namespaceManager = NamespaceManager.CreateFromConnectionString(connBuilder.ToString());
